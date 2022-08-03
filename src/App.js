@@ -1,82 +1,99 @@
-import { myContext, themes, userContext } from "./contexts/myContext";
+// import React, { useState, useMemo } from "react";
+// import { log, getInitialItems } from './utils';
+// // without memo
+// /*   function List({ items }) {
+//     log('renderList');
+//     return items.map((item, key) => (
+//       <div key={key}>item: {item.text}</div>
+//     ));
+//   }
+
+//   export default function App() {
+//     log('renderApp');  
+//     const [count, setCount] = useState(0);
+//     const [items, setItems] = useState(getInitialItems(10)); 
+//     return (
+//       <div>
+//         <h1>{count}</h1>
+//         <button onClick={() => setCount(count + 1)}>
+//           inc
+//         </button>
+//         <List items={items} />
+//       </div>
+//     );
+//   } */
+
+// // with memo
+// const List = React.memo(({ items }) => {
+//   log('renderList');
+//   return items.map((item, key) => (
+//     <div key={key}>item: {item.text}</div>
+//   ));
+// });
+
+// export default function App() {
+//   log('renderApp');  
+//   const [count, setCount] = useState(0);
+//   const [items, setItems] = useState(getInitialItems(10));  
+//   return (
+//     <div>
+//       <h1>{count}</h1>
+//       <button onClick={() => setCount(count + 1)}>
+//         inc
+//       </button>
+//       <List items={items} />
+//     </div>
+//   );
+// }
+
+// /* 
+// In the above example, memoization works properly and reduces the number of renders. During mount renderApp and renderList are logged, but when inc is clicked, only renderApp is logged.
+//  */
+
+// useMemo
 import React, { useState, useMemo } from "react";
+import { log, getInitialItems } from './utils';
+import{ MyComponent}from './useMemoRender'
+// without memo
+/*   function List({ items }) {
+    log('renderList');
+    return items.map((item, key) => (
+      <div key={key}>item: {item.text}</div>
+    ));
+  }
 
-const App = () => {
-  const [theme, setTheme] = useState(themes.light);
-  const [userName, setUserName] = useState("kirill");
-  const value = useMemo(() => ({ theme, setTheme }), [theme]);
-
-  return (
-    <>
-      <myContext.Provider value={value}>
-        <userContext.Provider value={userName}>
-          <Header />
-          <div>
-            <h1>Hello World!</h1>
-          </div>
-          <Footer />
-        </userContext.Provider>
-      </myContext.Provider>
-    </>
-  );
-};
-
-const Header = () => {
-  const { theme, setTheme } = React.useContext(myContext);
-  const toggleTheme = () => {
-    setTheme(theme === themes.dark ? themes.light : themes.dark);
-  };
-  return (
-    <>
-      <div
-        style={{
-          display: "inline-block",
-          width: "100%",
-          backgroundColor: theme.background,
-          color: theme.color,
-        }}
-      >
-        <ul style={{ float: "left" }}>
-          <li>Home</li>
-          <li>About Us</li>
-          <li>Contact Us</li>
-          <li>
-            <button onClick={toggleTheme}>Change Theme</button>
-          </li>
-        </ul>
-        <UserMenu />
+  export default function App() {
+    log('renderApp');  
+    const [count, setCount] = useState(0);
+    const [items, setItems] = useState(getInitialItems(10)); 
+    return (
+      <div>
+        <h1>{count}</h1>
+        <button onClick={() => setCount(count + 1)}>
+          inc
+        </button>
+        <List items={items} />
       </div>
-    </>
-  );
-};
+    );
+  } */
 
-const Footer = () => {
-  const { theme } = React.useContext(myContext);
+// with memo
+const List = React.memo(({ items }) => {
+  log('renderList');
+  return items.map((item, key) => (
+    <div key={key}>item: {item.text}</div>
+  ));
+});
+
+export default function App() {
+  log('renderApp');  
+  const [count, setCount] = useState(0);
+  const [items, setItems] = useState(getInitialItems(10));  
   return (
-    <div style={{ backgroundColor: theme.background, color: theme.color }}>
-      <p>CopyRight @2022</p>
-    </div>
+    <MyComponent/>
   );
-};
+}
 
-const UserMenu = () => {
-  const { theme } = React.useContext(myContext);
-  const { name } = React.useContext(userContext);
-  return (
-    <div style={{ float: "right" }}>
-      <span>{name}</span>
-      <ul
-        style={{
-          backgroundColor: theme.background,
-          color: theme.color,
-        }}
-      >
-        <li>Profile</li>
-        <li>Settings</li>
-        <li>Log out</li>
-      </ul>
-    </div>
-  );
-};
-
-export default App;
+/* 
+In the above example, memoization works properly and reduces the number of renders. During mount renderApp and renderList are logged, but when inc is clicked, only renderApp is logged.
+ */
