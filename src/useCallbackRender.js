@@ -37,7 +37,7 @@ const AppTwo = () => {
   );
 };
 
-const List = React.memo(({ list,     }) => {
+const List = React.memo(({ list, onRemove }) => {
   log("The Component Render: List");
   return (
     <ul>
